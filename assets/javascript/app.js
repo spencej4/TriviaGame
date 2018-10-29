@@ -8,9 +8,11 @@ let triviaGame = {
     correctNum: 0,
     incorrectNum: 0,
     timerId: "",
+    gif: "", /* new */
     answerClicked: false,
     questions: [{
             question: "The rain in spain falls mainly in the plain",
+            gifLink: "assets/images/mfl.gif", /* new */
             answer: "My Fair Lady",
             options: [
                 { answer: "Sound of Music" },
@@ -22,6 +24,7 @@ let triviaGame = {
         {
             question: "What about the animal cargo?",
             answer: "Ace Ventura",
+            gifLink: "assets/images/ventura.gif",/* new */
             options: [
                 { answer: "Jurassic Park" },
                 { answer: "Pulp Fiction" },
@@ -132,64 +135,58 @@ let triviaGame = {
         let timerSpan = $('<div></div>');
         timerSpan.attr('id', 'timerSpan');
         timer.append(timerSpan);
-        timerSpan.text(triviaGame.incorrectNum);
+        timerSpan.text(triviaGame.timeLeft);
     },
 
-    makeGameBoard: function (num) {
+    emptyBoard: function() {
+        // resets the board values
         triviaGame.answerClicked = false;
-        // resets the board
         $('#triviaGame').empty();
+    },
+    
+    makeGameBoard: function (num) {
+        triviaGame.emptyBoard();
         triviaGame.makeHeaderStats();
 
         for (var i=num; i <= num; i++) {
             // saves index of question as global 
             // used in checkAnswer function
             triviaGame.index = i;
+            triviaGame.gif = triviaGame.questions[i].gifLink;/* new */
             // creates
+            let gifBoard = $('<div></div>'); /* new */
             let question = $('<div></div>');
             let optionsBoard = $('<div></div>');
             // adds attributes
+            gifBoard.attr('id','gifBoard'); /* new */
             question.attr('id', 'question');
             optionsBoard.attr('id', 'optionsBoard');
             // appends DOM
+            $('#triviaGame').append(gifBoard);
             $('#triviaGame').append(question);
             $('#triviaGame').append(optionsBoard);
             // sets text
-            question.text(triviaGame.questions[i].question);
+            question.text(`Q: ${triviaGame.questions[i].question}`);
 
             for (var j=0; j < triviaGame.questions[i].options.length; j++) {
-                // console.log(triviaGame.questions[i].options[j].answer);
                 // creates
                 let answer = $('<div></div>');
-
                 // adds attributes
                 answer.addClass('answer').attr('id', triviaGame.questions[i].options[j].answer);
-
                 // appends DOM
                 $('#optionsBoard').append(answer);
-
                 answer.text(triviaGame.questions[i].options[j].answer);
-                
             }
             break;
         }
+        console.log(triviaGame.gif);
         triviaGame.makeTimer();
         triviaGame.checkAnswer();
     },
 
     makeTimer: function () {
-        // clears the timer from DOM
-        // $('#timer').remove();
         clearTimeout(triviaGame.timerId);
         triviaGame.timeLeft = 30;
-
-        // // creates DOM element
-        // let timerDisplay = $('<div></div>');
-        // // gives ID attribute to new DOM element
-        // timerDisplay.attr('id', 'timer');
-        // // appends to the DOM
-        // $('#question').append(timerDisplay);
-
         triviaGame.timerId = setInterval(triviaGame.countdown, 1000);
     },
 
@@ -210,33 +207,61 @@ let triviaGame = {
 
     stopTimer: function () {
         clearTimeout(triviaGame.timerId);
-        $('#timer').remove();
     },
 
     checkAnswer: function() {
+        // if(!triviaGame.answerClicked);
         $('.answer').click(function() {
+            let selection = this.id;
             triviaGame.answerClicked = true;
-            console.log(this.id);
+            triviaGame.showGIF();
+
             if (this.id === triviaGame.questions[triviaGame.index].answer) {
-                console.log('match found!');
-                triviaGame.num++;
-                triviaGame.correctNum++
-                triviaGame.makeTimer();
-                triviaGame.makeGameBoard(triviaGame.num);
+                triviaGame.answerSelected(selection);
             }else {
-                console.log('nope');
-                triviaGame.incorrectNum++
-                triviaGame.num++;
-                triviaGame.makeTimer();
-                triviaGame.makeGameBoard(triviaGame.num);
+                triviaGame.answerNotSelected(selection);
             }
         })
+    },
+
+    showGIF: function() {
+        $('#gifBoard').css("background-image", "url('" + triviaGame.gif + "')");
+    },
+
+    answerSelected: function(selection) {
+        let selected = document.getElementById(selection);
+        selected.style.backgroundColor = 'green';
+        triviaGame.correctNum++
+        $('#correctNumSpan').text(triviaGame.correctNum);
+        triviaGame.num++;
+        $('#question').text("Nice Job!");
+
+        myVar = setTimeout(function () { 
+            triviaGame.makeTimer();
+            triviaGame.makeGameBoard(triviaGame.num);
+        }, 5000);
+    },
+
+    answerNotSelected: function(selection) {
+        let selected = document.getElementById(selection);
+        // selected.style.backgroundColor = '#b3b3cc';
+
+        selected.className = 'wrong';
+        triviaGame.incorrectNum++
+        $('#incorrectNumSpan').text(triviaGame.incorrectNum);
+        triviaGame.num++;
+        $('#question').text("Nice try...");
+
+        myVar = setTimeout(function () {
+            triviaGame.makeTimer();
+            triviaGame.makeGameBoard(triviaGame.num);
+        }, 5000);
     },
 }
 
 // randomize answers 
-// create tally
-    // correct, incorrect, 
+// create tally             DONE
+    // correct, incorrect,  DONE
 
 // create tally
     // 5/10
