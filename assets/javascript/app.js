@@ -210,16 +210,17 @@ let triviaGame = {
     },
 
     checkAnswer: function() {
-        // if(!triviaGame.answerClicked);
         $('.answer').click(function() {
-            let selection = this.id;
-            triviaGame.answerClicked = true;
-            triviaGame.showGIF();
+            if (!triviaGame.answerClicked){
+                let selection = this.id;
+                triviaGame.answerClicked = true;
+                triviaGame.showGIF();
 
-            if (this.id === triviaGame.questions[triviaGame.index].answer) {
-                triviaGame.answerSelected(selection);
-            }else {
-                triviaGame.answerNotSelected(selection);
+                if (this.id === triviaGame.questions[triviaGame.index].answer) {
+                    triviaGame.answerSelected(selection);
+                }else {
+                    triviaGame.answerNotSelected(selection);
+                }
             }
         })
     },
