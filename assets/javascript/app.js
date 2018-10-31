@@ -9,6 +9,7 @@ let triviaGame = {
     incorrectNum: 0,
     header: "",
     timerId: "",
+    timerPauseId: "",
     gif: "",
     answerClicked: false,
     questions: [
@@ -104,6 +105,25 @@ let triviaGame = {
             ]
         },
         {
+            question: "Can't turn left...",
+            answer: "Zoolander",
+            gifLink: "assets/images/zoolander.gif",
+            options: [{
+                answer: "Magnetic particles"
+            },
+            {
+                answer: "The first airplane"
+            },
+            {
+                answer: "Three-wheeler"
+            },
+            {
+                answer: "Zoolander"
+            },
+
+            ]
+        },
+        {
             question: "What type of galaxy is our Milky Way?",
             answer: "A_spiral_galaxy",
             gifLink: "assets/images/galaxy.gif",
@@ -139,7 +159,37 @@ let triviaGame = {
                 },
             ]
         },
+        {
+            question: "In which film do two cats sing “The Siamese Cat Song”?",
+            gifLink: "assets/images/siamese.gif",
+            answer: "Lady_and_the_Tramp",
+            options: [{
+                answer: "101 Dalmations"
+            },
+            {
+                answer: "Lady and the Tramp"
+            },
+            {
+                answer: "My Fair Lady"
+            },
+            {
+                answer: "An American Tail"
+            }
+            ]
+        },
     ],
+
+   
+    stopGame: function () {
+        let numLeft = triviaGame.questions.length;
+        // if there are no questions left
+        if (numLeft === triviaGame.num) {
+            triviaGame.showGameOverGif();
+            triviaGame.showPlayAgain();
+        } else {
+            triviaGame.makeGameBoard(triviaGame.num);
+        }
+    },
 
     makeHeaderStats: function () {
         //header
@@ -234,17 +284,6 @@ let triviaGame = {
         timerSpan.text(triviaGame.timeLeft);
     },
 
-    stopGame: function () {
-        let numLeft = triviaGame.questions.length;
-        if (numLeft === triviaGame.num) {
-            console.log('game over');
-            triviaGame.showGameOverGif();
-            triviaGame.showPlayAgain();
-        } else {
-            triviaGame.makeGameBoard(triviaGame.num);
-        }
-    },
-
     makeGameBoard: function (num) {
         this.emptyBoard();
         this.makeHeaderStats();
@@ -305,7 +344,6 @@ let triviaGame = {
         triviaGame.timeLeft = 30;
         triviaGame.timerId = setInterval(triviaGame.countdown, 1000);
         triviaGame.countdown();
-    
     },
 
     countdown: function () {
@@ -384,24 +422,26 @@ let triviaGame = {
         triviaGame.correctNum++
         $('#correctNumSpan').text(triviaGame.correctNum);
         triviaGame.num++;
-        $('#question').text("Nice Job!");
-
-        myVar = setTimeout(function () {
+        $('#question').text("Correct!");
+        
+        // pauses game to show correct answer
+        triviaGame.timerPauseId = setTimeout(function () {
+            // makes timer
             triviaGame.makeTimer();
-            // check if game is out of questions
+            // checks if game is out of questions
             triviaGame.stopGame();
-            // triviaGame.makeGameBoard(triviaGame.num);
-        }, 5000);
+        }, 4000);
     },
 
     answerNotSelected: function (selection) {
+        // shows the correct answer
         triviaGame.showAnswer();
-        console.log(selection);
         let selected = $("#" + selection);
-        console.log(`Trivia Game Index: ${triviaGame.index}`);
         // changes background of selected answer
         selected.css('background-color', '#F33C62');
+        // resets selected variable
         selected = "";
+
         //updates number of incorrect
         triviaGame.incorrectNum++
         // changes text of incorrectNum in header
@@ -411,10 +451,13 @@ let triviaGame = {
         // displays message
         $('#question').text("Nice try...");
 
-        myVar = setTimeout(function () {
+        //pause game to show correct answer
+        triviaGame.timerPauseId = setTimeout(function () {
+            // make timer
             triviaGame.makeTimer();
+            // check if game is out of questions
             triviaGame.stopGame();
-        }, 30);
+        }, 4000);
     },
 
     showAnswer: function() {
@@ -430,19 +473,3 @@ let triviaGame = {
     }
 
 }
-
-
-
-// add more questions
-// and gifs
-
-// create game over div             DONE
-// create play again button and     DONE
-// create play again function
-
-// create tally            DONE
-// 5/10                DONE
-
-// randomize answers 
-// create tally         DONE
-// correct, incorrect,  DONE

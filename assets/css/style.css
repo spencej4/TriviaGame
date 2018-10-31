@@ -258,12 +258,13 @@ button:focus {
     width: 55%;
     height: 40px;
     border: 1px solid grey;
-    padding-top: 12px;
-    padding: 30px auto 0 auto;
+    padding-top: 15px;
+    /* padding: 42px auto 0 auto; */
     font-size: 1.5em;
     position: relative;
     display: inline-block;
     text-align: center;
+    letter-spacing: 3px;
 }
 
 #question p {
