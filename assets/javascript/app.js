@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 let triviaGame = {
     num: 0,
-    timeLeft: 5000,
+    timeLeft: 30,
     correctNum: 0,
     incorrectNum: 0,
     header: "",
@@ -236,7 +236,6 @@ let triviaGame = {
 
     stopGame: function () {
         let numLeft = triviaGame.questions.length;
-        console.log(numLeft);
         if (numLeft === triviaGame.num) {
             console.log('game over');
             triviaGame.showGameOverGif();
@@ -249,7 +248,7 @@ let triviaGame = {
     makeGameBoard: function (num) {
         this.emptyBoard();
         this.makeHeaderStats();
-
+        this.makeTimer();
         for (var i = num; i <= num; i++) {
             // saves index of question as global 
             triviaGame.index = i; /* (used in checkAnswer function) */
@@ -286,7 +285,7 @@ let triviaGame = {
             }
             break;
         }
-        this.makeTimer();
+        // this.makeTimer();
         this.checkAnswer();
     },
 
@@ -303,8 +302,10 @@ let triviaGame = {
 
     makeTimer: function () {
         clearTimeout(triviaGame.timerId);
-        triviaGame.timeLeft = 5000;
+        triviaGame.timeLeft = 30;
         triviaGame.timerId = setInterval(triviaGame.countdown, 1000);
+        triviaGame.countdown();
+    
     },
 
     countdown: function () {
@@ -394,9 +395,10 @@ let triviaGame = {
     },
 
     answerNotSelected: function (selection) {
+        triviaGame.showAnswer();
         console.log(selection);
         let selected = $("#" + selection);
-        console.log(selected);
+        console.log(`Trivia Game Index: ${triviaGame.index}`);
         // changes background of selected answer
         selected.css('background-color', '#F33C62');
         selected = "";
@@ -412,9 +414,21 @@ let triviaGame = {
         myVar = setTimeout(function () {
             triviaGame.makeTimer();
             triviaGame.stopGame();
-            // triviaGame.makeGameBoard(triviaGame.num);
-        }, 5000);
+        }, 30);
     },
+
+    showAnswer: function() {
+        // for each answer in the DOM
+        $('.answer').each(function () {
+            // if ID of answer matches answer to question
+            if (this.id === triviaGame.questions[triviaGame.index].answer) {
+                // changes the colors for the correct asnwer
+                this.style.backgroundColor = '#C9FF7E';
+                this.style.color = '#666';
+            }
+        });
+    }
+
 }
 
 
