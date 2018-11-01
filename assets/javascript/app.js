@@ -142,24 +142,6 @@ let triviaGame = {
             ]
         },
         {
-            question: "A Schwarzschild radius:",
-            answer: "Is_the_event_horizon_of_a_non-rotating_black_hole",
-            gifLink: "assets/images/blackHole.gif",
-            options: [{
-                    answer: "Requires a theory of quantum gravity"
-                },
-                {
-                    answer: "Is the event horizon of a non-rotating black hole"
-                },
-                {
-                    answer: "Is responsible for the redshift of ancient light"
-                },
-                {
-                    answer: "Is a biproduct of Hawking radiation"
-                },
-            ]
-        },
-        {
             question: "In which film do two cats sing “The Siamese Cat Song”?",
             gifLink: "assets/images/siamese.gif",
             answer: "Lady_and_the_Tramp",
@@ -174,6 +156,24 @@ let triviaGame = {
             },
             {
                 answer: "An American Tail"
+            }
+            ]
+        },
+        {
+            question: "(4 * 3) / 2",
+            gifLink: "assets/images/willfarrell.gif",
+            answer: "Six",
+            options: [{
+                answer: "Three"
+            },
+            {
+                answer: "Six"
+            },
+            {
+                answer: "No thanks"
+            },
+            {
+                answer: "Uraguay"
             }
             ]
         },
@@ -192,94 +192,76 @@ let triviaGame = {
     },
 
     makeHeaderStats: function () {
-        //header
-        triviaGame.header = $('<div></div>');
-        triviaGame.header.attr('id', 'header');
+    // header
+        triviaGame.header = $('<div></div>').attr('id', 'header');
         $('#triviaGame').append(triviaGame.header);
 
-        // number  of correct answers
-        let score1 = $('<div></div>');
-        score1.attr('id', 'score1');
+    // number  of correct answers
+        let score1 = $('<div></div>').attr('id', 'score1');
         triviaGame.header.append(score1);
 
-        let numCorrectTop = $('<div></div>');
-        numCorrectTop.attr('id', 'numCorrectTop')
+        let numCorrectTop = $('<div></div>').attr('id', 'numCorrectTop');
         score1.append(numCorrectTop);
         numCorrectTop.text(`Number`);
 
-        let numCorrectBottom = $('<div></div>');
-        numCorrectBottom.attr('id', 'numCorrectBottom')
+        let numCorrectBottom = $('<div></div>').attr('id', 'numCorrectBottom');
         score1.append(numCorrectBottom);
         numCorrectBottom.text(`Correct:`);
 
-        let correctNumSpan = $('<div></div>');
-        correctNumSpan.attr('id', 'correctNumSpan');
+        let correctNumSpan = $('<div></div>').attr('id', 'correctNumSpan');
         score1.append(correctNumSpan);
         correctNumSpan.text(triviaGame.correctNum);
 
 
-        // number of incorrect answers
-        let score2 = $('<div></div>');
-        score2.attr('id', 'score2');
+    // number of incorrect answers
+        let score2 = $('<div></div>').attr('id', 'score2');
         triviaGame.header.append(score2);
 
-        let numIncorrectTop = $('<div></div>');
-        numIncorrectTop.attr('id', 'numIncorrectTop')
+        let numIncorrectTop = $('<div></div>').attr('id', 'numIncorrectTop');
         score2.append(numIncorrectTop);
         numIncorrectTop.text(`Number`);
 
-        let numIncorrectBottom = $('<div></div>');
-        numIncorrectBottom.attr('id', 'numIncorrectBottom')
+        let numIncorrectBottom = $('<div></div>').attr('id', 'numIncorrectBottom');
         score2.append(numIncorrectBottom);
         numIncorrectBottom.text(`Incorrect:`);
 
-        let incorrectNumSpan = $('<div></div>');
-        incorrectNumSpan.attr('id', 'incorrectNumSpan');
+        let incorrectNumSpan = $('<div></div>').attr('id', 'incorrectNumSpan');
         score2.append(incorrectNumSpan);
         incorrectNumSpan.text(triviaGame.incorrectNum);
 
-        //number of questions
-        let count = $('<div></div>');
-        count.attr('id', 'count');
+    // number of questions
+        let count = $('<div></div>').attr('id', 'count');
         triviaGame.header.append(count);
 
-        let countTop = $('<div></div>');
-        countTop.attr('id', 'countTop')
+        let countTop = $('<div></div>').attr('id', 'countTop');
         count.append(countTop);
         countTop.text(`Question`);
 
-        let countBottom = $('<div></div>');
-        countBottom.attr('id', 'countBottom')
+        let countBottom = $('<div></div>').attr('id', 'countBottom');
         count.append(countBottom);
         countBottom.text(`Count:`);
 
-        let countSpan = $('<div></div>');
-        countSpan.attr('id', 'countSpan');
+        let countSpan = $('<div></div>').attr('id', 'countSpan');
         count.append(countSpan);
         countSpan.text(triviaGame.num + 1);
 
-        let countSpan2 = $('<div></div>');
-        countSpan2.attr('id', 'countSpan2');
+        let countSpan2 = $('<div></div>').attr('id', 'countSpan2');
         count.append(countSpan2);
         countSpan2.text(`/${triviaGame.questions.length}`);
 
-        // #timerSpan
-        let timer = $('<div></div>');
-        timer.attr('id', 'timer');
+    // timer
+        let timer = $('<div></div>').attr('id', 'timer');
         triviaGame.header.append(timer);
 
-        let timerTop = $('<div></div>');
-        timerTop.attr('id', 'timerTop')
+        let timerTop = $('<div></div>').attr('id', 'timerTop');
         timer.append(timerTop);
         timerTop.text(`Seconds`);
 
-        let timerBottom = $('<div></div>');
-        timerBottom.attr('id', 'timerBottom')
+        let timerBottom = $('<div></div>').attr('id', 'timerBottom');
         timer.append(timerBottom);
         timerBottom.text(`Remaining:`);
 
-        let timerSpan = $('<div></div>');
-        timerSpan.attr('id', 'timerSpan');
+        let timerSpan = $('<div></div>').attr('id', 'timerSpan');
         timer.append(timerSpan);
         timerSpan.text(triviaGame.timeLeft);
     },
@@ -292,17 +274,12 @@ let triviaGame = {
             // saves index of question as global 
             triviaGame.index = i; /* (used in checkAnswer function) */
             triviaGame.gif = triviaGame.questions[i].gifLink;
-            // creates
-            let gifBoard = $('<div></div>');
-            let question = $('<div></div>');
-            let optionsBoard = $('<div></div>');
-            let answerColumn = $('<div></div>');
-            // adds attributes
-            gifBoard.attr('id', 'gifBoard');
-            question.attr('id', 'question');
-            optionsBoard.attr('id', 'optionsBoard');
-            answerColumn.attr('id', 'answerColumn');
-            // appends DOM
+            // creates and adds ID's
+            let gifBoard = $('<div></div>').attr('id', 'gifBoard');
+            let question = $('<div></div>').attr('id', 'question');
+            let optionsBoard = $('<div></div>').attr('id', 'optionsBoard');
+            let answerColumn = $('<div></div>').attr('id', 'answerColumn');
+            // appends 
             $('#triviaGame').append(gifBoard);
             $('#triviaGame').append(question);
             $('#triviaGame').append(optionsBoard);
@@ -318,13 +295,13 @@ let triviaGame = {
                     triviaGame.questions[i].options[j].answer.split(" ").join("_");                
                 // adds attributes
                 answer.addClass('answer').attr('id', answerID);
-                // appends DOM
+                // appends 
                 $('#answerColumn').append(answer);
+                // sets text
                 answer.text(triviaGame.questions[i].options[j].answer);
             }
             break;
         }
-        // this.makeTimer();
         this.checkAnswer();
     },
 
@@ -335,7 +312,6 @@ let triviaGame = {
     },
 
     emptyHeaderStats: function () {
-        // resets header 
         $('#header').empty();
     },
 
@@ -367,6 +343,7 @@ let triviaGame = {
     },
 
     checkAnswer: function () {
+        // called when user clicks any answer
         $('.answer').click(function () {
             // prevents ability to choose more than one answer
             if (!triviaGame.answerClicked) {
@@ -374,8 +351,10 @@ let triviaGame = {
                 triviaGame.answerClicked = true;
                 triviaGame.showGIF();
 
+                // if answer chosen is the actual answer
                 if (this.id === triviaGame.questions[triviaGame.index].answer) {
                     triviaGame.answerSelected(selection);
+                // otherwise...
                 } else {
                     triviaGame.answerNotSelected(selection);
                 }
@@ -392,14 +371,9 @@ let triviaGame = {
     },
 
     showPlayAgain: function() {
-        // empties the options board
         $('#optionsBoard').empty();
-        // creates new div (play again button)
-        let playAgain = $('<div></div>');
-        // adds id to new div
-        playAgain.attr('id', 'playAgain');
+        let playAgain = $('<div></div>').attr('id', 'playAgain');
         playAgain.text('Play Again');
-        // appends new div to DOM
         $('#optionsBoard').append(playAgain);
 
         $('#playAgain').click(function() {
@@ -409,7 +383,7 @@ let triviaGame = {
     },
 
     reset: function() {
-        // resets global stat values
+        // resets global values
         triviaGame.num = 0;
         triviaGame.correctNum = 0;
         triviaGame.incorrectNum = 0;
@@ -461,9 +435,9 @@ let triviaGame = {
     },
 
     showAnswer: function() {
-        // for each answer in the DOM
+        // searches answers
         $('.answer').each(function () {
-            // if ID of answer matches answer to question
+            // finds the correct answer
             if (this.id === triviaGame.questions[triviaGame.index].answer) {
                 // changes the colors for the correct asnwer
                 this.style.backgroundColor = '#C9FF7E';
@@ -471,5 +445,4 @@ let triviaGame = {
             }
         });
     }
-
 }
